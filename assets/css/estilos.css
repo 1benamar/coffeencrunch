@@ -743,6 +743,53 @@ main:focus { outline: none; }
 @keyframes deriva { to { translate: 0 calc(var(--f) * -110px); } }
 @media (max-width: 1279px) { .mesa { display: none; } }
 
+/* portada más llena: sello del logo impreso en el papel, ficha con datos reales y taza sobre la mesa */
+.portada__papel { position: relative; }
+.portada__papel > :not(.portada__sello) { position: relative; z-index: 1; }
+.portada__sello {
+  position: absolute;
+  z-index: 0;
+  top: -54px;
+  left: -62px;
+  width: 214px;
+  aspect-ratio: 1;
+  background: var(--oro);
+  opacity: .15;
+  rotate: -14deg;
+  pointer-events: none;
+  -webkit-mask: url(../logo/logo.svg) center / contain no-repeat;
+  mask: url(../logo/logo.svg) center / contain no-repeat;
+}
+.portada__ficha { display: grid; justify-items: center; gap: 8px; width: min(100%, 360px); margin-top: 6px; padding-top: 18px; border-top: 1.5px dotted rgb(20 68 60 / .32); }
+.portada__google { display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; color: var(--tinta); font-size: .9375rem; text-decoration: none; font-variant-numeric: tabular-nums; }
+.portada__google strong { font-weight: 700; }
+.portada__estrellas { display: inline-flex; gap: 2px; color: var(--oro); }
+.portada__estrellas .ico { width: 17px; height: 17px; }
+@media (hover: hover) and (pointer: fine) { .portada__google:hover > span:last-of-type { text-decoration: underline; text-decoration-color: var(--oro); text-underline-offset: 4px; } }
+.portada__ficha .estado { color: var(--tinta-2); }
+.portada__ficha .estado__punto { border-color: var(--tinta-2); }
+.portada__ficha .estado.abierto .estado__punto { border-color: var(--oro); }
+.taza-mesa {
+  --f: .5;
+  position: absolute;
+  left: calc(50% - 770px);
+  top: 3%;
+  width: 230px;
+  height: 230px;
+  stroke-width: 3;
+  transform: translate(var(--mx, 0px), var(--my, 0px)) rotate(-10deg);
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .taza-mesa { animation: deriva linear both; animation-timeline: scroll(root block); animation-range: 0 90vh; }
+  }
+}
+@media (max-width: 1399px) { .taza-mesa { display: none; } } /* por debajo no cabe junto al sobre */
+@media (max-width: 700px) {
+  .portada__sello { display: none; }
+  .portada__ficha { width: 100%; }
+}
+
 /* bandas de mesa más oscuras, con el borde dentado del sellado */
 .cinta, .local { position: relative; background: var(--verde-hondo); --suelo: var(--verde-hondo); }
 .cinta::before, .local::before, .pie::before, .cinta::after, .local::after {
